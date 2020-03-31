@@ -14,7 +14,8 @@ app.config['SECRET_KEY'] = os.urandom(12)
 
 
 #---------- Route -------------
-''' Page pricipale : affiche tout les flux '''
+
+# Page pricipale : affiche tout les flux
 @app.route('/')
 def home():
     if not session.get('logged_in'):
@@ -26,7 +27,7 @@ def home():
             liste.append(feed)
         return render_template('home.html', listfeed=liste)
 
-''' Page personnalisée : affiche uniquement les abonnements du user '''
+# Page personnalisée : affiche uniquement les abonnements du user
 @app.route('/my-news', methods=['GET', 'POST', ])
 def my_news():
     if not session.get('logged_in'):
@@ -50,7 +51,7 @@ def my_news():
                     liste.append(feed)
             return render_template('mynews.html', listfeed=liste)
     
-''' Page de connexion '''    
+# Page de connexion
 @app.route('/login', methods=['POST'])
 def do_admin_login():
     for user in Users.select():
@@ -65,7 +66,7 @@ def do_admin_login():
     flash('wrong password!')
     return redirect(url_for('do_admin_login'))
 
-''' Page d'inscription '''
+# Page d'inscription
 @app.route('/SignUp', methods=['GET','POST', ])
 def signup():
     user = Users()
@@ -77,13 +78,14 @@ def signup():
         return home()
     return render_template('signup.html', form=form)
 
-''' Page de déconnexion '''
+
+# Page de déconnexion
 @app.route("/logout")
 def logout():
     session['logged_in'] = False
     return redirect(url_for('home'))
 
-''' Page d'administration : affiche les flux et permet d'ajouter un flux '''
+# Page d'administration : affiche les flux et permet d'ajouter un flux
 @app.route('/administration', methods=['GET', 'POST', ])
 def admin():
     if not session.get('logged_in'):
@@ -92,7 +94,7 @@ def admin():
         liste = []
         for news in News.select():
             feed = feedparser.parse(news.url)
-            liste.append(news)
+            liste.append(feed)
         news = News()
         form = NewsForm()
         user = Users()

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block main %}
+    <h1>All your news are here</h1>
+    <div class="content">
+        {% for feed in listfeed %}
+            {% for item in feed.entries %}
+                <div class="news">
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.published}}</p>
+                    <form action="/my-news" method="POST">
+                        <input type="hidden" name="Feed" value="{{ feed.url }}">
+                        <input type="submit" value="Follow this flow" class="btn btn-primary btn-large btn-block">
+                    </form>
+                    <a href="{{ item.link  }}">Voir</a>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endblock %}

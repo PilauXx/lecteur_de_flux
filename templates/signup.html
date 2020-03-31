@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block style %}
+    {{ super() }}
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename='style/login.css') }}"/>
+{% endblock %}
+
+{% block main %}
+    <form method="POST">
+        <div class="login">
+            <div class="login-screen">
+                <div class="app-title">
+                    <h1>SignUp</h1>
+                </div>
+                <div class="login-form">
+                    <div class="control-group">
+                        {% for field in form %}
+
+                            {% if field.widget.input_type != 'hidden' %}
+                                {{ field.label() }}
+
+                                {% if field.errors %}
+                                    {% for error in field.errors %}
+                                    <div class="alert alert-error">{{ error }}</div>
+                                    {% endfor %}
+                                {% endif %}
+
+                            {% endif %}
+                            {{ field() }}
+
+                        {% endfor %}
+                    </div>
+                    <input type="submit" value="Register" class="btn btn-primary btn-large btn-block">
+                </div>
+            </div>                    
+        </div>
+    </form>
+{% endblock %}
